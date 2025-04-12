@@ -1,47 +1,17 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#include <string.h>
 
-void josephus(int n, int k) {
-    bool* alive = (bool*)malloc(n * sizeof(bool));
+int josep(int n, int k) {
+	if (n == 0) return 0;
+	else {
+		return (josep(n - 1, k) + k - 1) % n + 1;
+	}
 
-    int acount = n;
-    int curent = 0;
-    int index = 0;
-
-    for (int i = 0; i < n; i++) {
-        alive[i] = true;
-    }
-
-    while (acount > 1) {
-        if (alive[curent]) {
-            index++;
-            if (index == k) {
-                printf("Killed %d\n", curent + 1);
-                alive[curent] = false;
-                acount--;
-                index = 0;
-            }
-        }
-        curent = (curent + 1) % n;
-    }
-
-    for (int i = 0; i < n; i++) {
-        if (alive[i]) {
-            printf("Last person %d\n", i + 1);
-            break;
-        }
-    }
-	free(alive);
 }
 
-int main() {
-    int n, k;
-    n = 13;
-    k = 3;
-
-    josephus(n, k);
-
-    return 0;
+void main() {
+	int n, k;
+	n = 13;
+	k = 3;
+	printf("The last person remaining is %d\n", josep(n, k));
 }
